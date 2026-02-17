@@ -28,6 +28,16 @@ int main(int argc, char* argv[]) {
 
     printHelp();
 
+    // Print camera info (defined before the loop so 'I' key can call it)
+    auto printCameraInfo = [&]() {
+        std::cout << "Camera #" << cameraIndex << " info:\n"
+                  << "  Resolution : "
+                  << (int)cap.get(cv::CAP_PROP_FRAME_WIDTH)  << " x "
+                  << (int)cap.get(cv::CAP_PROP_FRAME_HEIGHT) << "\n"
+                  << "  FPS        : " << cap.get(cv::CAP_PROP_FPS) << "\n";
+    };
+    printCameraInfo();
+
     bool grayscale   = false;
     bool flipped     = false;
     int  snapCounter = 0;
@@ -40,14 +50,14 @@ int main(int argc, char* argv[]) {
         cap >> frame;
 
         if (frame.empty()) {
-            std::cerr << "[WARNING] Empty frame received – camera may have disconnected.\n";
+            std::cerr << "[WARNING] Empty frame received - camera may have disconnected.\n";
             break;
         }
 
         display = frame.clone();
 
         if (flipped) {
-            cv::flip(display, display, 1);  
+            cv::flip(display, display, 1);
         }
 
         if (grayscale) {
