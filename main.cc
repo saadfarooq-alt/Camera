@@ -5,9 +5,6 @@
 void printHelp() {
     std::cout << "\n=== Camera Viewer Controls ===\n"
               << "  Q / ESC  - Quit\n"
-              << "  S        - Save a snapshot (snapshot_<n>.png)\n"
-              << "  G        - Toggle grayscale mode\n"
-              << "  F        - Toggle horizontal flip\n"
               << "  I        - Print camera info to console\n"
               << "==============================\n\n";
 }
@@ -85,21 +82,7 @@ int main(int argc, char* argv[]) {
         if (key == 'q' || key == 'Q' || key == 27 /* ESC */) {
             std::cout << "Quitting.\n";
             break;
-        }
-        else if (key == 's' || key == 'S') {
-            std::string filename = "snapshot_" + std::to_string(++snapCounter) + ".png";
-            cv::imwrite(filename, display);
-            std::cout << "Saved: " << filename << "\n";
-        }
-        else if (key == 'g' || key == 'G') {
-            grayscale = !grayscale;
-            std::cout << "Grayscale: " << (grayscale ? "ON" : "OFF") << "\n";
-        }
-        else if (key == 'f' || key == 'F') {
-            flipped = !flipped;
-            std::cout << "Flip: " << (flipped ? "ON" : "OFF") << "\n";
-        }
-        else if (key == 'i' || key == 'I') {
+        } else if (key == 'i' || key == 'I') {
             printCameraInfo();
         }
     }
