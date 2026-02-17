@@ -18,13 +18,17 @@ int main(int argc, char* argv[]) {
         cameraIndex = std::stoi(argv[1]);
     }
 
-    cv::VideoCapture cap(cameraIndex);
+    // Use AVFoundation explicitly on macOS for best compatibility
+    cv::VideoCapture cap(cameraIndex, cv::CAP_AVFOUNDATION);
 
     if (!cap.isOpened()) {
         std::cerr << "[ERROR] Could not open camera index " << cameraIndex << ".\n"
                   << "        Try a different index, e.g.: ./camera_capture 1\n";
         return 1;
     }
+
+    // Set FPS explicitly - macOS AVFoundation often misreports this
+    cap.set(cv::CAP_PROP_FPS, 30);
 
     printHelp();
 
